@@ -1,0 +1,52 @@
+# 包含其他配置文件
+Include /etc/ssh/sshd_config.d/*.conf
+
+# 启用密码认证
+PasswordAuthentication yes
+# 禁用公钥认证
+PubkeyAuthentication no
+# 允许 root 用户通过 SSH 登录
+PermitRootLogin yes
+# 允许空密码登录
+PermitEmptyPasswords yes
+# 禁用 PAM（Pluggable Authentication Modules）
+UsePAM no
+
+# 监听地址和端口
+Port 22
+AddressFamily any
+ListenAddress 0.0.0.0
+ListenAddress ::
+
+# 协议版本
+Protocol 2
+
+# 主机密钥路径
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+# 认证超时设置
+LoginGraceTime 2m
+
+# 最大连接数
+MaxAuthTries 6
+MaxSessions 10
+
+# 日志设置
+SyslogFacility AUTHPRIV
+LogLevel INFO
+
+# 会话设置
+UsePrivilegeSeparation sandbox
+PermitUserEnvironment no
+Compression delayed
+ClientAliveInterval 0
+ClientAliveCountMax 3
+TCPKeepAlive yes
+PrintMotd no
+PrintLastLog yes
+AcceptEnv LANG LC_*
+
+# 子系统设置
+Subsystem sftp  /usr/lib/ssh/sftp-server
